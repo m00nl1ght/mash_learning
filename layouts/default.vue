@@ -1,18 +1,26 @@
 <template>
-  <section class="relativ h-screen w-screen bg-gray-200 flex flex-col overflow-hidden">
-    <AppHeader @open-menu="isOpen = !isOpen" />
+  <q-layout view="lHh Lpr lFf">
+    <AppHeader @open-menu="toggleLeftDrawer" />
 
-    <main class="sm:h-full flex-1 flex flex-col">
-      <slot />
-    </main>
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
+      <q-list>
+        <q-item-label header> Essential Links </q-item-label>
+      </q-list>
+    </q-drawer>
 
-    <AppFooter />
-    <AppMenu :is-open="isOpen" @closeMenu="isOpen = !isOpen" />
-  </section>
+    <q-page-container>
+      <NuxtPage />
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import AppHeader from '@/components/AppHeader.vue'
 
-const isOpen = ref(false)
+const leftDrawerOpen = ref(false)
+
+function toggleLeftDrawer() {
+  leftDrawerOpen.value = !leftDrawerOpen.value
+}
 </script>
